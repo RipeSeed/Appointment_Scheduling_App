@@ -24,7 +24,6 @@ app.get("/", async (req, res) => {
       .then((querySnapshot) => {
         // Create a list of events from the query snapshot
         const events = querySnapshot.docs.map((doc) => doc.data());
-        console.log("first event", events[0]);
         // Create a list of available slots based on the events and the static config
         const availableSlots = getAvailableSlots(
           events,
@@ -50,7 +49,6 @@ app.post("/create-event", async (req, res) => {
   }
   const startTime = req.body.startTime;
   const duration = Number(req.body.duration);
-  console.log("req.body.duration", typeof req.body.duration);
   try {
     const querySnapshot = await db.collection("events").get();
     const events = querySnapshot.docs.map((doc) => doc.data());
