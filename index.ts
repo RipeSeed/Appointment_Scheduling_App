@@ -63,10 +63,10 @@ app.post("/create-event", async (req, res) => {
   const currentTime = dayjs.utc();
   const newTime = dayjs(startTime).utc();
   const doctorStartTime = dayjs
-    .tz(dayjs(startTime).utc().format("YYYY-MM-DD"), "America/Los_Angeles")
+    .tz(dayjs(startTime).utc().format("YYYY-MM-DD"), config.timezone)
     .hour(config.startHours);
   const doctorEndTime = dayjs
-    .tz(dayjs(startTime).utc().format("YYYY-MM-DD"), "America/Los_Angeles")
+    .tz(dayjs(startTime).utc().format("YYYY-MM-DD"), config.timezone)
     .hour(config.endHours);
 
   if (
@@ -157,11 +157,9 @@ function getDailySlots(
   // Create a list of available slots
   const availableSlots: string[] = [];
   const startTime = dayjs
-    .tz(currentDate, "America/Los_Angeles")
+    .tz(currentDate, config.timezone)
     .hour(config.startHours);
-  const endTime = dayjs
-    .tz(currentDate, "America/Los_Angeles")
-    .hour(config.endHours);
+  const endTime = dayjs.tz(currentDate, config.timezone).hour(config.endHours);
   let currentTime = startTime;
   // Loop through the events and add the available slots to the list
   while (currentTime <= endTime) {
